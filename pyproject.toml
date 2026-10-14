@@ -1,0 +1,107 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "brokerclock"
+dynamic = ["version"]
+description = "MetaTrader broker server time to UTC and back, with daylight saving done right."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Raeez alshamaly", email = "github@raeez-alshamaly.com" }]
+keywords = [
+    "metatrader",
+    "metatrader5",
+    "mt5",
+    "mt4",
+    "forex",
+    "fx",
+    "broker",
+    "server time",
+    "utc",
+    "timezone",
+    "time zone",
+    "dst",
+    "daylight saving",
+    "gmt offset",
+    "pandas",
+    "trading",
+    "algorithmic trading",
+    "backtesting",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Typing :: Typed",
+]
+dependencies = ["tzdata; sys_platform == 'win32'"]
+
+[project.optional-dependencies]
+pandas = ["pandas>=2.0"]
+dev = ["pytest>=8", "hypothesis>=6", "ruff==0.17.0", "pandas>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/raiez-alshamaly/brokerclock"
+Source = "https://github.com/raiez-alshamaly/brokerclock"
+Issues = "https://github.com/raiez-alshamaly/brokerclock/issues"
+
+[tool.hatch.version]
+path = "src/brokerclock/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/brokerclock"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # bugbear
+    "UP",   # pyupgrade
+    "SIM",  # simplify
+    "RUF",  # ruff-specific
+    "C4",   # comprehensions
+    "PIE",  # misc lints
+    "PT",   # pytest style
+    "RET",  # return statements
+    "DTZ",  # naive datetimes
+    "ANN",  # annotations
+    "PLC",  # pylint conventions
+    "PLE",  # pylint errors
+    "PLW",  # pylint warnings
+    "PLR",  # pylint refactor
+]
+ignore = [
+    "ANN401",  # Any is the honest type for pandas array-likes and pass-through kwargs
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = [
+    "ANN",      # test functions need no annotations
+    "DTZ",      # tests build naive server wall times on purpose
+    "PLR2004",  # literal values are the point of a test
+    "PLR0913",  # synthetic data builders take many options
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+xfail_strict = true
