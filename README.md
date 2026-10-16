@@ -1,5 +1,7 @@
 # brokerclock — MetaTrader broker server time to UTC (and back), with daylight saving done right
 
+[![PyPI](https://img.shields.io/pypi/v/brokerclock)](https://pypi.org/project/brokerclock/)
+
 MetaTrader 5 does not give you UTC. The `time` and `time_msc` values that `copy_rates_*`, `copy_ticks_*`,
 `history_deals_get` and `history_orders_get` return are the broker's **server clock written as epoch seconds**,
 even though they look like Unix timestamps. If you searched for "MT5 server time UTC", "broker GMT offset" or
@@ -18,7 +20,9 @@ that moment. It finds the rule from price history alone, confirms it against liv
 or whole pandas columns. It needs only the standard library (plus `tzdata` on Windows) and never imports
 `MetaTrader5`, so it runs and tests on any operating system.
 
-## Install (after the first release)
+## Install
+
+brokerclock is on [PyPI](https://pypi.org/project/brokerclock/):
 
 ```bash
 pip install brokerclock
